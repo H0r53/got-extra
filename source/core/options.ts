@@ -19,7 +19,7 @@ import type {
 } from 'node:https';
 import type {InspectOptions} from 'node:util';
 import is, {assert} from '@sindresorhus/is';
-import lowercaseKeys from 'lowercase-keys';
+//import lowercaseKeys from 'lowercase-keys';
 import CacheableLookup from 'cacheable-lookup';
 import http2wrapper, {ClientHttp2Session} from 'http2-wrapper';
 import {isFormDataLike} from 'form-data-encoder';
@@ -716,9 +716,13 @@ const defaultInternals: Options['_internals'] = {
 	password: '',
 	http2: false,
 	allowGetBody: false,
-	headers: {
+	/*
+	   Do not use default user-agent value
+	   headers: {
 		'user-agent': 'got (https://github.com/sindresorhus/got)',
 	},
+	*/
+        headers: {},
 	methodRewriting: false,
 	dnsLookupIpVersion: undefined,
 	parseJson: JSON.parse,
@@ -1908,10 +1912,20 @@ export default class Options {
 	set headers(value: Headers) {
 		assert.plainObject(value);
 
+		/**
+		 Respect the header keys as they are provided and do not lowercase
+
 		if (this._merging) {
 			Object.assign(this._internals.headers, lowercaseKeys(value));
 		} else {
 			this._internals.headers = lowercaseKeys(value);
+		}
+
+	       */
+		if (this._merging) {
+			Object.assign(this._internals.headers, value);
+		} else {
+			this._internals.headers = value;
 		}
 	}
 
