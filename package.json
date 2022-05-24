@@ -1,5 +1,5 @@
 {
-	"name": "got-extra",
+	"name": "got-ext",
 	"version": "12.0.4",
 	"description": "Extra Control Over Headers and Payloads in the got NodeJS Package",
 	"license": "MIT",
