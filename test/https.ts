@@ -4,7 +4,6 @@ import test from 'ava';
 import {pEvent} from 'p-event';
 import pify from 'pify';
 import pem from 'pem';
-import got from '../source/index.js';
 import {withHttpsServer} from './helpers/with-server.js';
 
 const createPrivateKey = pify(pem.createPrivateKey);

@@ -1,5 +1,4 @@
 import test from 'ava';
-import got from '../source/index.js';
 import withServer from './helpers/with-server.js';
 
 test('http/1 timings', withServer, async (t, server, got) => {
