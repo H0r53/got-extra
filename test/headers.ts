@@ -17,13 +17,6 @@ const echoHeaders: Handler = (request, response) => {
 	response.end(JSON.stringify(request.headers));
 };
 
-test('`user-agent`', withServer, async (t, server, got) => {
-	server.get('/', echoHeaders);
-
-	const headers = await got('').json<Headers>();
-	t.is(headers['user-agent'], 'got (https://github.com/sindresorhus/got)');
-});
-
 test('`accept-encoding`', withServer, async (t, server, got) => {
 	server.get('/', echoHeaders);
 
@@ -40,23 +33,6 @@ test('does not override provided `accept-encoding`', withServer, async (t, serve
 		},
 	}).json<Headers>();
 	t.is(headers['accept-encoding'], 'gzip');
-});
-
-test('does not remove user headers from `url` object argument', withServer, async (t, server) => {
-	server.get('/', echoHeaders);
-
-	const headers = (await got<Headers>({
-		url: `http://${server.hostname}:${server.port}`,
-		responseType: 'json',
-		headers: {
-			'X-Request-Id': 'value',
-		},
-	})).body;
-
-	t.is(headers.accept, 'application/json');
-	t.is(headers['user-agent'], 'got (https://github.com/sindresorhus/got)');
-	t.is(headers['accept-encoding'], supportsBrotli ? 'gzip, deflate, br' : 'gzip, deflate');
-	t.is(headers['x-request-id'], 'value');
 });
 
 test('does not set `accept-encoding` header when `options.decompress` is false', withServer, async (t, server, got) => {
@@ -88,18 +64,6 @@ test('`host` header', withServer, async (t, server, got) => {
 
 	const headers = await got('').json<Headers>();
 	t.is(headers.host, `localhost:${server.port}`);
-});
-
-test('transforms names to lowercase', withServer, async (t, server, got) => {
-	server.get('/', echoHeaders);
-
-	const headers = (await got<Headers>({
-		headers: {
-			'ACCEPT-ENCODING': 'identity',
-		},
-		responseType: 'json',
-	})).body;
-	t.is(headers['accept-encoding'], 'identity');
 });
 
 test('setting `content-length` to 0', withServer, async (t, server, got) => {

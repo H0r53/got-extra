@@ -138,30 +138,6 @@ test('https request with wrong host', withHttpsServer({commonName: 'not-localhos
 	);
 });
 
-test('http2', async t => {
-	const promise = got('https://httpbin.org/anything', {
-		http2: true,
-	});
-
-	try {
-		const {headers, body} = await promise;
-		await promise.json();
-
-		// @ts-expect-error Pseudo headers may not be strings
-		t.is(headers[':status'], 200);
-		t.is(typeof body, 'string');
-
-		t.pass();
-	} catch (error: any) {
-		if (error.message.includes('install Node.js')) {
-			t.pass();
-			return;
-		}
-
-		t.fail(error.stack);
-	}
-});
-
 test.serial('deprecated `rejectUnauthorized` option', withHttpsServer(), async (t, server, got) => {
 	server.get('/', (_request, response) => {
 		response.end('ok');

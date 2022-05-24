@@ -7,18 +7,6 @@ const echoHeaders: Handler = (request, response) => {
 	response.end(JSON.stringify(request.headers));
 };
 
-test('merging instances', withServer, async (t, server) => {
-	server.get('/', echoHeaders);
-
-	const instanceA = got.extend({headers: {unicorn: 'rainbow'}});
-	const instanceB = got.extend({prefixUrl: server.url});
-	const merged = instanceA.extend(instanceB);
-
-	const headers = await merged('').json<Headers>();
-	t.is(headers.unicorn, 'rainbow');
-	t.not(headers['user-agent'], undefined);
-});
-
 test('merges default handlers & custom handlers', withServer, async (t, server) => {
 	server.get('/', echoHeaders);
 

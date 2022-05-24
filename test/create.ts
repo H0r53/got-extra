@@ -104,15 +104,6 @@ test('hooks are merged on got.extend()', t => {
 	t.deepEqual(extended.defaults.options.hooks.beforeRequest, [...hooksA, ...hooksB]);
 });
 
-test('custom endpoint with custom headers (extend)', withServer, async (t, server) => {
-	server.all('/', echoHeaders);
-
-	const instance = got.extend({headers: {unicorn: 'rainbow'}, prefixUrl: server.url});
-	const headers = await instance('').json<Headers>();
-	t.is(headers.unicorn, 'rainbow');
-	t.not(headers['user-agent'], undefined);
-});
-
 test('no tampering with defaults', t => {
 	t.throws(() => {
 		got.defaults.options.prefixUrl = 'http://google.com';
