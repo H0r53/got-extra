@@ -1,4 +1,4 @@
-import {Readable} from 'node:stream';
+import {Readable} from 'stream';
 import is from '@sindresorhus/is';
 
 interface FormData extends Readable {

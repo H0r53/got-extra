@@ -1,4 +1,4 @@
-import {EventEmitter} from 'node:events';
+import {EventEmitter} from 'events';
 import is from '@sindresorhus/is';
 import PCancelable from 'p-cancelable';
 import {

@@ -1,4 +1,4 @@
-import {EventEmitter} from 'node:events';
+import {EventEmitter} from 'events';
 
 type Fn = (...args: unknown[]) => void;
 type Fns = Record<string, Fn>;

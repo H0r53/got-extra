@@ -1,23 +1,23 @@
-import process from 'node:process';
-import {Buffer} from 'node:buffer';
-import {promisify, inspect} from 'node:util';
-import {URL, URLSearchParams} from 'node:url';
-import {checkServerIdentity} from 'node:tls';
+import process from 'process';
+import {Buffer} from 'buffer';
+import {promisify, inspect} from 'util';
+import {URL, URLSearchParams} from 'url';
+import {checkServerIdentity} from 'tls';
 // DO NOT use destructuring for `https.request` and `http.request` as it's not compatible with `nock`.
-import http from 'node:http';
-import https from 'node:https';
-import type {Readable} from 'node:stream';
-import type {Socket} from 'node:net';
-import type {SecureContextOptions, DetailedPeerCertificate} from 'node:tls';
+import http from 'http';
+import https from 'https';
+import type {Readable} from 'stream';
+import type {Socket} from 'net';
+import type {SecureContextOptions, DetailedPeerCertificate} from 'tls';
 import type {
 	Agent as HttpAgent,
 	ClientRequest,
-} from 'node:http';
+} from 'http';
 import type {
 	RequestOptions as HttpsRequestOptions,
 	Agent as HttpsAgent,
-} from 'node:https';
-import type {InspectOptions} from 'node:util';
+} from 'https';
+import type {InspectOptions} from 'util';
 import is, {assert} from '@sindresorhus/is';
 import CacheableLookup from 'cacheable-lookup';
 import http2wrapper, {ClientHttp2Session} from 'http2-wrapper';

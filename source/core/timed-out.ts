@@ -1,5 +1,5 @@
-import net from 'node:net';
-import {ClientRequest, IncomingMessage} from 'node:http';
+import net from 'net';
+import {ClientRequest, IncomingMessage} from 'http';
 import unhandler from './utils/unhandle.js';
 
 const reentry: unique symbol = Symbol('reentry');
