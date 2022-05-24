@@ -1,6 +1,6 @@
 {
 	"name": "got-ext",
-	"version": "12.0.5",
+	"version": "12.0.6",
 	"description": "Extra Control Over Headers and Payloads in the got NodeJS Package",
 	"license": "MIT",
 	"repository": "H0r53/got-extra",
