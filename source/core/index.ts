@@ -583,7 +583,7 @@ export default class Request extends Duplex implements RequestEvents<Request> {
 				options.body = options.stringifyJson(json);
 			}
 
-			const uploadBodySize = await getBodySize(options.body, options.headers);
+			//const uploadBodySize = await getBodySize(options.body, options.headers);
 
 			// See https://tools.ietf.org/html/rfc7230#section-3.3.2
 			// A user agent SHOULD send a Content-Length in a request message when
@@ -594,9 +594,11 @@ export default class Request extends Duplex implements RequestEvents<Request> {
 			// Content-Length header field when the request message does not contain
 			// a payload body and the method semantics do not anticipate such a
 			// body.
-			if (is.undefined(headers['content-length']) && is.undefined(headers['transfer-encoding']) && !cannotHaveBody && !is.undefined(uploadBodySize)) {
-				headers['content-length'] = String(uploadBodySize);
-			}
+
+			// Ignore this, manually provide content-length
+			// if (is.undefined(headers['content-length']) && is.undefined(headers['transfer-encoding']) && !cannotHaveBody && !is.undefined(uploadBodySize)) {
+			// 	headers['content-length'] = String(uploadBodySize);
+			// }
 		}
 
 		if (options.responseType === 'json' && !('accept' in options.headers)) {
@@ -1031,9 +1033,10 @@ export default class Request extends Duplex implements RequestEvents<Request> {
 			}
 		}
 
-		if (options.decompress && is.undefined(headers['accept-encoding'])) {
-			headers['accept-encoding'] = supportsBrotli ? 'gzip, deflate, br' : 'gzip, deflate';
-		}
+		// Ignore this, manually specify accept-encoding
+		// if (options.decompress && is.undefined(headers['accept-encoding'])) {
+		// 	headers['accept-encoding'] = supportsBrotli ? 'gzip, deflate, br' : 'gzip, deflate';
+		// }
 
 		if (username || password) {
 			const credentials = Buffer.from(`${username}:${password}`).toString('base64');
