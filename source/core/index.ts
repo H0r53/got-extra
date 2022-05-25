@@ -13,7 +13,6 @@ import {buffer as getBuffer} from 'get-stream';
 import {FormDataEncoder, isFormDataLike} from 'form-data-encoder';
 import type {ClientRequestWithTimings, Timings, IncomingMessageWithTimings} from '@szmarczak/http-timer';
 import type ResponseLike from 'responselike';
-import getBodySize from './utils/get-body-size.js';
 import isFormData from './utils/is-form-data.js';
 import proxyEvents from './utils/proxy-events.js';
 import timedOut, {TimeoutError as TimedOutTimeoutError} from './timed-out.js';
@@ -42,8 +41,6 @@ export interface Progress {
 	transferred: number;
 	total?: number;
 }
-
-const supportsBrotli = is.string(process.versions.brotli);
 
 const methodsWithoutBody: ReadonlySet<string> = new Set(['GET', 'HEAD']);
 
@@ -583,7 +580,7 @@ export default class Request extends Duplex implements RequestEvents<Request> {
 				options.body = options.stringifyJson(json);
 			}
 
-			//const uploadBodySize = await getBodySize(options.body, options.headers);
+			// Removing: const uploadBodySize = await getBodySize(options.body, options.headers);
 
 			// See https://tools.ietf.org/html/rfc7230#section-3.3.2
 			// A user agent SHOULD send a Content-Length in a request message when
